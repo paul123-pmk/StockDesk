@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} · StockDesk</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+{% if user %}
+<aside class="sidebar">
+  <a class="brand" href="/"><span class="brand-mark">S</span>StockDesk<span class="brand-dot">.</span></a>
+  <p class="sidebar-label">WORKSPACE</p>
+  <nav aria-label="Main navigation">
+  {% for path, label, mark in [('/', 'Overview','01'),('/inventory','Stock on hand','02'),('/movements','Movements','03'),('/products','Products','04'),('/orders','Purchase orders','05'),('/counts','Stock counts','06'),('/catalog','Warehouses & suppliers','07')] %}
+    <a href="{{ path }}" class="nav-link {% if request.url.path == path or (path != '/' and request.url.path.startswith(path + '/')) %}selected{% endif %}"><span>{{ mark }}</span>{{ label }}</a>
+  {% endfor %}
+  {% if user.role == 'admin' %}
+    <p class="sidebar-label">ADMINISTRATION</p>
+    <a class="nav-link {% if request.url.path == '/users' %}selected{% endif %}" href="/users"><span>08</span>Access management</a>
+    <a class="nav-link {% if request.url.path == '/audit' %}selected{% endif %}" href="/audit"><span>09</span>Audit trail</a>
+  {% endif %}
+    <a class="nav-link" href="/api-guide"><span>↗</span>API & operating notes</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="status-dot"></span> Local-first workspace<br><small>One business. A clear stock record.</small></div>
+</aside>
+{% endif %}
+<div class="shell {% if not user %}without-sidebar{% endif %}">
+{% if user %}
+<header class="topbar"><span>OPERATIONS <span class="divider">/</span> {{ title }}</span><div class="account"><span class="avatar">{{ user.username[0]|upper }}</span><div><strong>{{ user.username }}</strong><small>{{ user.role }}</small></div><form action="/logout" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="text-button" type="submit">Sign out</button></form></div></header>
+{% endif %}
+<main id="main">
+{% if notice %}<div class="notice" role="status">{{ notice }}</div>{% endif %}
+{% block content %}{% endblock %}
+</main>
+<footer class="footer"><span>StockDesk / development release 0.1.0</span><span>Whole units · {{ currency|default('KES') }} minor-unit costs · timestamps in UTC</span></footer>
+</div>
+</body>
+</html>

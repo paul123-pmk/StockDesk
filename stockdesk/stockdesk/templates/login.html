@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="login-layout">
+<div class="login-story"><a class="brand" href="/login"><span class="brand-mark">S</span>StockDesk.</a><p class="eyebrow">INVENTORY, WITHOUT THE GUESSWORK</p><h1>A place for<br>every product.<br>A record for<br>every move.</h1><p>Know what is on the shelf, what is on order, and what changed between counts.</p><div class="login-points"><span>01 / Trace stock movements</span><span>02 / Receive against purchase orders</span><span>03 / Keep counts accountable</span></div></div>
+<div class="login-form"><span class="eyebrow">YOUR WORKSPACE</span><h2>Welcome back.</h2><p class="muted">Sign in with an account created by your administrator.</p>{% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}<form method="post" action="/login"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><label>Username<input name="username" autocomplete="username" maxlength="40" required autofocus></label><label>Password<input name="password" type="password" autocomplete="current-password" maxlength="1024" required></label><button class="button full" type="submit">Open workspace <span>→</span></button></form><div class="login-help"><strong>First time here?</strong><p>Initialize the database and create your own administrator account using the commands in the README. No default password is shipped.</p></div></div>
+</section>
+{% endblock %}

@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest==9.0.2
+pytest-cov==7.0.0
+coverage==7.13.3
+httpx==0.28.1

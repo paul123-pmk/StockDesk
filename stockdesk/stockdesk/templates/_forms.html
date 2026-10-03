@@ -1,0 +1,5 @@
+{% macro csrf(token) %}<input type="hidden" name="csrf_token" value="{{ token }}">{% endmacro %}
+{% macro key(value) %}<input type="hidden" name="request_key" value="{{ value }}">{% endmacro %}
+{% macro product_select(products) %}<label>Product<select name="product_id" required><option value="">Choose a product</option>{% for p in products %}<option value="{{ p.id }}">{{ p.sku }} · {{ p.name }}</option>{% endfor %}</select></label>{% endmacro %}
+{% macro warehouse_select(warehouses, name='warehouse_id', label='Warehouse') %}<label>{{ label }}<select name="{{ name }}" required><option value="">Choose a warehouse</option>{% for w in warehouses %}<option value="{{ w.id }}">{{ w.code }} · {{ w.name }}</option>{% endfor %}</select></label>{% endmacro %}
+{% macro note() %}<label>Reference or note <span class="optional">optional</span><input name="note" maxlength="500" placeholder="A delivery reference or a reason for the change"></label>{% endmacro %}

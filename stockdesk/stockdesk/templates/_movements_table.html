@@ -1,0 +1,4 @@
+<div class="table-wrap"><table><thead><tr><th>When (UTC)</th><th>Product</th><th>Warehouse</th><th>Movement</th><th class="number">Change</th><th class="number">Balance after</th><th>Recorded by</th></tr></thead><tbody>
+{% for m in report['items'] %}<tr><td class="muted mono">{{ m.created_at[:19]|replace('T',' ') }}</td><td><a href="/products/{{ m.product_id }}"><strong>{{ m.sku }}</strong></a><small>{{ m.name }}</small></td><td>{{ m.warehouse_code }}</td><td><span class="badge">{{ m.kind|replace('_',' ') }}</span><small>{{ m.note }}</small></td><td class="number {% if m.delta > 0 %}positive{% else %}negative{% endif %}">{% if m.delta > 0 %}+{% endif %}{{ m.delta }}</td><td class="number">{{ m.balance_after }}</td><td>{{ m.username }}</td></tr>
+{% else %}<tr><td colspan="7" class="empty">No stock movements yet. Record a receipt to begin.</td></tr>{% endfor %}
+</tbody></table></div>
